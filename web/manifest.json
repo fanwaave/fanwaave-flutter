@@ -1,0 +1,11 @@
+{
+  "name": "Fanwaave",
+  "short_name": "Fanwaave",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#7AA2F7",
+  "description": "Consent-aware audience signals, moment scoring, and observable routing",
+  "orientation": "any",
+  "prefer_related_applications": false
+}
