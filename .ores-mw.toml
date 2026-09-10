@@ -1,0 +1,13 @@
+# ORES middleware repository contract.
+# Contract/runtime baseline: ORESoftware/ores-middleware@ee75f0a67cf23895500846402fbc757aa0686530.
+# Cross-runtime authority parity is fail-closed through ORESoftware/typespec-json-schema-validator.
+schema_version = 1
+repository_mode = "client-only"
+default_target = "client"
+
+[[targets]]
+name = "client"
+role = "client"
+roots = ["."]
+middleware = "propagation-only"
+propagate_headers = ["traceparent", "tracestate", "baggage", "x-request-id"]
