@@ -1,0 +1,16 @@
+# ORES LRU client projection. Admitted interface: ores-redis-lru-cache/ores-lru-redis-interfaces@4474d240b38a4fe1dd24f01dcd2e9ab7a4c34b27.
+# Runtime baseline: ores-redis-lru-cache/ores-lru-redis.rs@d0afdae952a1efcfc3feaa9bdc145e3636457832.
+# TJSV baseline: ORESoftware/typespec-json-schema-validator@2281843126ab644607b11cf8281d84f382d68dfc.
+protocol = "ores.lru-config.v1"
+namespace = "fanwaave"
+roles = ["client"]
+
+[defaults]
+capacity = 256
+syncMode = "local_only"
+overflowMode = "reject_and_reconcile"
+failOpenOnStartup = false
+
+[[caches]]
+name = "runtime-env"
+role = "client"
