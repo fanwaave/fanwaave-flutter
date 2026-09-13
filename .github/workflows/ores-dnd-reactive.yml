@@ -1,0 +1,46 @@
+name: ores-dnd-reactive
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fanwaave-flutter-ores-dnd-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  flutter-reactive-dnd:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out exact candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.EXPECTED_SHA }}
+          persist-credentials: false
+      - name: Verify exact contributor head
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Set up pinned Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          channel: stable
+          flutter-version: 3.47.4
+          cache: true
+      - name: Resolve pinned ores-dnd graph
+        run: flutter pub get
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyze Flutter consumer
+        run: flutter analyze
+      - name: Run reactive DnD canary
+        run: flutter test test/reactive_dnd_test.dart
+      - name: Verify tooling did not mutate tracked source
+        run: git diff --exit-code
