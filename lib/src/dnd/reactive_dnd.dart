@@ -12,8 +12,14 @@ final class FanwaaveReactiveDndController {
   final OresDndReactiveBus _bus;
 
   Stream<DndReactiveState> get state => _bus.state;
-  Stream<DndReactiveEvent> get dragOvers => _bus.dragOvers;
-  Stream<DndReactiveEvent> get lossless => _bus.lossless;
+  Stream<DndReactiveEvent> get dragOvers => _bus.events.where(
+        (event) => event.phase == DndLifecyclePhase.dragOver,
+      );
+  Stream<DndReactiveEvent> get lossless => _bus.events.where(
+        (event) =>
+            event.phase == DndLifecyclePhase.drop ||
+            event.phase == DndLifecyclePhase.dragEnd,
+      );
   Stream<DndTelemetryEvent> get telemetry => _bus.telemetry;
 
   void start(DndEnvelope envelope) {
