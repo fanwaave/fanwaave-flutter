@@ -1,0 +1,28 @@
+name: flutter-format-oracle
+
+on:
+  push:
+    branches: [DEN-3926-ores-dnd-reactive-canary-current-main]
+
+permissions:
+  contents: read
+
+jobs:
+  format-diff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          channel: stable
+          flutter-version: 3.47.4
+          cache: true
+      - name: Print toolchain canonicalization diff
+        run: |
+          flutter pub get
+          dart format lib/platform/parity_contract_v1.dart
+          git diff -- analysis_options.yaml lib/platform/parity_contract_v1.dart
+          test -z "$(git status --porcelain -- analysis_options.yaml lib/platform/parity_contract_v1.dart)"
