@@ -10,7 +10,7 @@ dependencies:
   ores_dnd:
     git:
       url: https://github.com/ORESoftware/ores-dnd.git
-      ref: f7cf6ffde50e582438851b8ebd94f1792e1977b0
+      ref: 0b96c5eac6cbb210e29249ce30509c792b7e8703
       path: src/dart
 
 dev_dependencies:
