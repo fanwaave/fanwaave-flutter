@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ores_flutter:
+    git:
+      url: https://github.com/ORESoftware/ores-flutter.git
+      ref: b39f9a1371ddd19289ad46fd5501d20524e5fc56
   ores_dnd:
     git:
       url: https://github.com/ORESoftware/ores-dnd.git
