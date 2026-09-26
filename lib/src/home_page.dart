@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ores_flutter/ores_flutter.dart';
 
 import 'screens/moments_screen.dart';
 import 'screens/routing_screen.dart';
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             actions: showStatus
                 ? const <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(right: 16),
+                      padding: EdgeInsets.only(right: OresSpacing.md),
                       child: Center(
                         child: Chip(
                           avatar: Icon(Icons.visibility_outlined, size: 18),
