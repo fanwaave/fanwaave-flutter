@@ -3,4 +3,5 @@ kind = "flutter"
 version = "0.1.0"
 
 [dependencies]
+"ores-otel/ores-otel-flutter" = "^0.1.0"
 "ORESoftware/ores-dnd" = "^0.1.0"
