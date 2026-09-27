@@ -7,12 +7,16 @@ environment:
   sdk: ">=3.5.0 <4.0.0"
 
 dependencies:
-  ores_otel_flutter:
-    git:
-      url: https://github.com/ores-otel/ores-otel-flutter.git
-      ref: 0e7bd61f2a1f3ac2910015742ce8e971e891605f
   flutter:
     sdk: flutter
+  # Zed owns package resolution/integrity; Pub consumes repository-local
+  # materializations without cross-org private Git credentials.
+  ores_flutter:
+    path: zed_modules/oresoftware/ores-flutter
+  ores_otel_flutter:
+    path: zed_modules/ores-otel/ores-otel-flutter
+  # Keep the existing DnD edge unchanged in this PR; migrate it separately to
+  # one canonical ores-dnd Flutter provider after its package path is proven.
   ores_dnd:
     git:
       url: https://github.com/ORESoftware/ores-dnd.git
