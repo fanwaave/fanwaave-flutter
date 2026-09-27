@@ -11,4 +11,3 @@ void main() {
     builder: (_) => const FanwaaveApp(),
   );
 }
-
