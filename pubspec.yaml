@@ -10,7 +10,7 @@ dependencies:
   ores_otel_flutter:
     git:
       url: https://github.com/ores-otel/ores-otel-flutter.git
-      ref: c7cf306eee7b07408057753251f937ea58f8e9ed
+      ref: 0e7bd61f2a1f3ac2910015742ce8e971e891605f
   flutter:
     sdk: flutter
   ores_dnd:
