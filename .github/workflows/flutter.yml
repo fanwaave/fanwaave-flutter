@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - ".github/workflows/flutter.yml"
+      - ".zpkg.toml"
+      - ".zpkg.lock"
       - "lib/**"
       - "test/**"
       - "web/**"
@@ -15,6 +17,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/flutter.yml"
+      - ".zpkg.toml"
+      - ".zpkg.lock"
       - "lib/**"
       - "test/**"
       - "web/**"
@@ -30,16 +34,44 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   FLUTTER_VERSION: 3.44.2
+  ZED_CLI_SHA: f003a7421b4b293750e0d9086e5290535b1eeb89
 
 jobs:
   analyze-test-web:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Check out exact candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: ${{ env.EXPECTED_SHA }}
           persist-credentials: false
+      - name: Verify exact candidate
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Check out immutable Zed CLI authority
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: zed-pkg/zed-cli
+          ref: ${{ env.ZED_CLI_SHA }}
+          path: tmp/zed-cli
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - name: Build exact Zed CLI
+        working-directory: tmp/zed-cli
+        run: cargo build --release --locked --bin zed
+      - name: Validate package manifest
+        run: ./tmp/zed-cli/target/release/zed validate --manifest .zpkg.toml
+      - name: Materialize exact Flutter dependencies
+        run: |
+          ./tmp/zed-cli/target/release/zed install --adapter dart
+          echo '--- generated .zpkg.lock ---'
+          cat .zpkg.lock
+          test -f zed_modules/oresoftware/ores-flutter/pubspec.yaml
+          test -f zed_modules/ores-otel/ores-otel-flutter/pubspec.yaml
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         with:
           channel: stable
