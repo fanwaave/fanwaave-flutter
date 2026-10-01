@@ -15,13 +15,8 @@ dependencies:
     path: zed_modules/oresoftware/ores-flutter
   ores_otel_flutter:
     path: zed_modules/ores-otel/ores-otel-flutter
-  # Keep the existing DnD edge unchanged in this PR; migrate it separately to
-  # one canonical ores-dnd Flutter provider after its package path is proven.
-  ores_dnd:
-    git:
-      url: https://github.com/ORESoftware/ores-dnd.git
-      ref: 0b96c5eac6cbb210e29249ce30509c792b7e8703
-      path: src/dart
+  ores_dnd_flutter:
+    path: zed_modules/ores-dnd/ores-dnd/src/flutter
 
 dev_dependencies:
   flutter_test:
