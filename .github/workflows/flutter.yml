@@ -72,6 +72,8 @@ jobs:
           cat .zpkg.lock
           test -f zed_modules/oresoftware/ores-flutter/pubspec.yaml
           test -f zed_modules/ores-otel/ores-otel-flutter/pubspec.yaml
+          test -f zed_modules/ores-dnd/ores-dnd/src/dart/pubspec.yaml
+          test -f zed_modules/ores-dnd/ores-dnd/src/flutter/pubspec.yaml
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         with:
           channel: stable
