@@ -11,6 +11,7 @@ url = "https://github.com/fanwaave/fanwaave-flutter"
 [dependencies]
 "oresoftware/ores-flutter" = "=0.1.0"
 "ores-otel/ores-otel-flutter" = "=0.1.0"
+"ores-dnd/ores-dnd" = "=0.1.0"
 
 [install]
 dir = "zed_modules"
