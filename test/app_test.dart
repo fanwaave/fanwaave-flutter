@@ -22,6 +22,29 @@ void main() {
     expect(find.text('Delivery remains off'), findsOneWidget);
   });
 
+  testWidgets('uses a labeled navigation rail for wide desktop viewports',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1200, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const FanwaaveApp());
+
+    expect(find.byType(NavigationRail), findsOneWidget);
+    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.text('Audience signals'), findsOneWidget);
+
+    await tester.tap(find.text('Moments'));
+    await tester.pumpAndSettle();
+    expect(find.text('Moment scoring'), findsOneWidget);
+
+    await tester.tap(find.text('Routing'));
+    await tester.pumpAndSettle();
+    expect(find.text('Observable routing'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('keeps every destination overflow-free at 320 by 640',
       (WidgetTester tester) async {
     tester.view.physicalSize = const Size(320, 640);
